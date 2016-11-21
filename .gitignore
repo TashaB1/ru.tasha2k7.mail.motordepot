@@ -1,0 +1,9 @@
+*.project
+webapp/.settings/
+dao-impl-xml/.settings/
+dao-impl-db/.settings/
+*.classpath
+services/.settings/
+datamodel/.settings/
+.settings/
+.metadata/
