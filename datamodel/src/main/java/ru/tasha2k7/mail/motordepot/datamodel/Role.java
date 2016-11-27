@@ -27,4 +27,9 @@ public class Role extends AbstractModel {
 		this.registrationData = registrationData;
 	}
 
+	@Override
+	public String toString() {
+		return "Role [nameRole=" + nameRole + "]";
+	}
+
 }

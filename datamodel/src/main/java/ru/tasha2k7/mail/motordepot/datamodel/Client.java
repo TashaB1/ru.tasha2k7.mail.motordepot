@@ -75,4 +75,14 @@ public class Client extends AbstractModel {
 		this.registrationData = registrationData;
 	}
 
+	@Override
+	public String toString() {
+		return "Client [nameClient=" + nameClient + ", address=" + address + ", numberPhone=" + numberPhone
+				+ ", registrationDataId=" + registrationDataId + ", deleted=" + deleted + "]";
+	}
+
+	
+	
+	
+
 }

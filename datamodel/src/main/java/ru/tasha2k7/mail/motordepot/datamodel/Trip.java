@@ -45,4 +45,12 @@ public class Trip extends AbstractModel {
 		this.application = application;
 	}
 
+	@Override
+	public String toString() {
+		return "Trip [pointDeparture=" + pointDeparture + ", destination=" + destination + ", mileageKm=" + mileageKm
+				+ "]";
+	}
+	
+	
+
 }

@@ -14,7 +14,7 @@ public @interface DaoMetadata {
 	// умолчанию будет возвращать определённое
 	// значение
 	
-	Class<?> entity() default Void.class;
+	Class<?> entity();// default Void.class;
 	//Class<?> mapper() default Void.class;
 	//Class<?> dimapper() default Void.class;
 }

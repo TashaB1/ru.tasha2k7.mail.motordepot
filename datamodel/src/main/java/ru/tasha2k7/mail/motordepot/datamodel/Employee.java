@@ -4,8 +4,10 @@ import java.util.Date;
 import java.util.List;
 
 import ru.tasha2k7.mail.motordepot.annotation.DBTableName;
+import ru.tasha2k7.mail.motordepot.annotation.DaoMetadata;
 
 @DBTableName(name = "employee")
+@DaoMetadata(entity = Employee.class)
 public class Employee extends AbstractModel {
 
 	private String firstname;
@@ -16,6 +18,7 @@ public class Employee extends AbstractModel {
 	private String categoryDriverLicense;
 	private String position;
 	private Long registrationDataId;
+	private Long carId;
 	private Date deleted;
 
 	private List<Application> applications;
@@ -86,6 +89,14 @@ public class Employee extends AbstractModel {
 		this.registrationDataId = registrationDataId;
 	}
 
+	public Long getCarId() {
+		return carId;
+	}
+
+	public void setCarId(Long carId) {
+		this.carId = carId;
+	}
+
 	public Date getDeleted() {
 		return deleted;
 	}
@@ -117,5 +128,16 @@ public class Employee extends AbstractModel {
 	public void setRegistrationData(RegistrationData registrationData) {
 		this.registrationData = registrationData;
 	}
+
+	@Override
+	public String toString() {
+		return "Employee [firstname=" + firstname + ", lastname=" + lastname + ", surname=" + surname + ", birthday="
+				+ birthday + ", numberDriverLicense=" + numberDriverLicense + ", categoryDriverLicense="
+				+ categoryDriverLicense + ", position=" + position + ", registrationDataId=" + registrationDataId
+				+ ", deleted=" + deleted + ", applications=" + applications + ", car=" + car + ", registrationData="
+				+ registrationData + "]";
+	}
+	
+	
 
 }

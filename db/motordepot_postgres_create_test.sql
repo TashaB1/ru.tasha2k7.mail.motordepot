@@ -1,3 +1,7 @@
+CREATE SCHEMA motordepot_test;
+
+set search_path to motordepot_test;
+
 CREATE TABLE "application" (
 	"id" serial NOT NULL,
 	"number_application" bigint NOT NULL UNIQUE,
@@ -43,8 +47,7 @@ CREATE TABLE "employee" (
 	"number_driver_license" character varying(128),
 	"category_driver_license" character varying(128),
 	"position" character varying(512) NOT NULL,
-	"registration_data_id" bigint NOT NULL UNIQUE,
-	"car_id" bigint NOT NULL UNIQUE,
+	"registration_data_id" bigint NOT NULL,
 	"deleted" DATE,
 	CONSTRAINT employee_pk PRIMARY KEY ("id")
 ) WITH (
@@ -76,7 +79,7 @@ CREATE TABLE "client" (
 	"name_client" character varying(512) NOT NULL UNIQUE,
 	"address" character varying(512) NOT NULL,
 	"number_phone" character varying(256) NOT NULL,
-	"registration_data_id" bigint NOT NULL UNIQUE,
+	"registration_data_id" bigint NOT NULL,
 	"deleted" DATE,
 	CONSTRAINT client_pk PRIMARY KEY ("id")
 ) WITH (
@@ -97,7 +100,8 @@ CREATE TABLE "role" (
 
 CREATE TABLE "registration_2_role" (
 	"registration_id" bigint NOT NULL,
-	"role_id" bigint NOT NULL
+	"role_id" bigint NOT NULL,
+	UNIQUE(registration_id, role_id)
 ) WITH (
   OIDS=FALSE
 );
@@ -122,8 +126,8 @@ ALTER TABLE "application" ADD CONSTRAINT "application_fk3" FOREIGN KEY ("driver_
 
 
 ALTER TABLE "employee" ADD CONSTRAINT "employee_fk0" FOREIGN KEY ("registration_data_id") REFERENCES "registration_data"("id");
-ALTER TABLE "employee" ADD CONSTRAINT "employee_fk1" FOREIGN KEY ("car_id") REFERENCES "car"("id");
 
+ALTER TABLE "car" ADD CONSTRAINT "car_fk0" FOREIGN KEY ("id") REFERENCES "employee"("id");
 
 ALTER TABLE "client" ADD CONSTRAINT "client_fk0" FOREIGN KEY ("registration_data_id") REFERENCES "registration_data"("id");
 

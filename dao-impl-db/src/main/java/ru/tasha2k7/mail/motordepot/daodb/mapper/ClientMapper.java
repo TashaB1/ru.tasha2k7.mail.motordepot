@@ -4,9 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import ru.tasha2k7.mail.motordepot.datamodel.Client;
-
+@Repository
 public class ClientMapper implements RowMapper<Client>{
 
 	@Override
@@ -16,6 +17,7 @@ public class ClientMapper implements RowMapper<Client>{
         entity.setNameClient(rs.getString("name_client"));
         entity.setAddress(rs.getString("address"));
         entity.setNumberPhone(rs.getString("number_phone"));
+        entity.setRegistrationDataId(rs.getLong("registration_data_id"));
         entity.setDeleted(rs.getDate("deleted"));
         return entity;
 	}

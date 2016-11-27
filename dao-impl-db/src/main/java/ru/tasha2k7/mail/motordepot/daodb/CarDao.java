@@ -7,5 +7,7 @@ public interface CarDao extends GenericDao<Car, Long> {
 	Car SpecificationsVehicle(Long id);
 	
 	Boolean getcondition(Long id);
+	
+	//не назначенные авто сделать!
 
 }

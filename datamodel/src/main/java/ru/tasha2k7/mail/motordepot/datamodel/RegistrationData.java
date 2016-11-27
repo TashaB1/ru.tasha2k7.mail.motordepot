@@ -56,4 +56,9 @@ public class RegistrationData extends AbstractModel {
 		this.role = role;
 	}
 
+	@Override
+	public String toString() {
+		return "RegistrationData [email=" + email + ", password=" + password + "]";
+	}
+
 }

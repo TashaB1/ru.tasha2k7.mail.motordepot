@@ -18,11 +18,14 @@ public interface EmployeeService {
 	
 	
 	//----driver----
-	String getByStatus(Long id);
 
 	void markDeliveryTrip(Application application);
 
-	void markconditionVehical(Car car);
+	void markConditionVehical(Car car);
 
 	void updateStatus(Employee employee);
+	
+	Boolean appointedCar(Long driverId); // +-  назначен ли водителю автомобиль
+	
+	Boolean emptyDriver(Long driverId); // свободен ли водитель
 }

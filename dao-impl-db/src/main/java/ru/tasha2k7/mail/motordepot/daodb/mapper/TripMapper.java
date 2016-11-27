@@ -4,9 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import ru.tasha2k7.mail.motordepot.datamodel.Trip;
-
+@Repository
 public class TripMapper implements RowMapper<Trip>{
 
 	@Override

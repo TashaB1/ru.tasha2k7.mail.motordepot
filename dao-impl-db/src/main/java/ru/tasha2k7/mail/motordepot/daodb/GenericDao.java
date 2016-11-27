@@ -18,4 +18,6 @@ public interface GenericDao<T, PK extends Serializable> {
 	List<T> getAll();
 	
 	public PK findTotalRecords();
+	
+	//void update(String table, String pole, PK znach, Long id);
 }

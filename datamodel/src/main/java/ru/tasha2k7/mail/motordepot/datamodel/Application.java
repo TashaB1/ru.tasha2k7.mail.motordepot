@@ -3,8 +3,10 @@ package ru.tasha2k7.mail.motordepot.datamodel;
 import java.util.Date;
 
 import ru.tasha2k7.mail.motordepot.annotation.DBTableName;
+import ru.tasha2k7.mail.motordepot.annotation.DaoMetadata;
 
 @DBTableName(name = "application")
+@DaoMetadata(entity = Application.class)
 public class Application extends AbstractModel {
 
 	public enum ApplicationStatus {
@@ -179,4 +181,15 @@ public class Application extends AbstractModel {
 		this.employee = employee;
 	}
 
+	@Override
+	public String toString() {
+		return "Application [numberApplication=" + numberApplication + ", dateApplication=" + dateApplication
+				+ ", clientId=" + clientId + ", tripId=" + tripId + ", weightCargoKg=" + weightCargoKg
+				+ ", lengthCargoM=" + lengthCargoM + ", widthCargoM=" + widthCargoM + ", heigthCargoM=" + heigthCargoM
+				+ ", beginningTripMark=" + beginningTripMark + ", deliveryCargoMark=" + deliveryCargoMark
+				+ ", endingTripMark=" + endingTripMark + ", dispatcherId=" + dispatcherId + ", driverId=" + driverId
+				+ ", note=" + note + ", status=" + status + "]";
+	}
+
+	
 }

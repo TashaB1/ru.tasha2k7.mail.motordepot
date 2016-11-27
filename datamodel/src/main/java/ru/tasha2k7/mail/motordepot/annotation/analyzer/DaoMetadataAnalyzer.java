@@ -1,25 +1,33 @@
 package ru.tasha2k7.mail.motordepot.annotation.analyzer;
 
-import java.lang.annotation.Annotation;
+
+import org.springframework.core.annotation.AnnotationUtils;
 
 import ru.tasha2k7.mail.motordepot.annotation.DaoMetadata;
 
+/*@SuppressWarnings("unused")
 public class DaoMetadataAnalyzer {
+
+	@SuppressWarnings("rawtypes")
+	public Class getEntityClass() {
+
+		final Class aClass = this.getClass();
+		DaoMetadata ne = AnnotationUtils.findAnnotation(aClass, DaoMetadata.class);
+
+		return ne.entity();
+	}
+
+}*/
+public class DaoMetadataAnalyzer {
+
 
 	@SuppressWarnings("rawtypes")
 	public Class getEntityClass(Object obj) {
 
-	/*	if (clazz.isAnnotationPresent(DaoMetadata.class)) {
-			// Получаем доступ к атрибутам
-			Annotation annotation = clazz.getAnnotation(DaoMetadata.class);
-			DaoMetadata daoMetadata = (DaoMetadata) annotation;
+		final Class aClass = obj.getClass();
+		DaoMetadata ne = AnnotationUtils.findAnnotation(aClass, DaoMetadata.class);
 
-			clazz = daoMetadata.entity().getSuperclass();
-		}*/
-		
-		Class subclass = obj.getClass();
-	    Class superclass = subclass.getSuperclass();	
-		
-		return superclass;
+		return ne.entity();
 	}
+
 }

@@ -23,6 +23,7 @@ public class EmployeeDiMapperImpl implements EmployeeDiMapper {
 		mapping.put("category_driver_license", employee.getCategoryDriverLicense());
 		mapping.put("position", employee.getPosition());
 		mapping.put("registration_data_id", employee.getRegistrationData().getId());
+		mapping.put("car_id", employee.getCar().getId());
 		mapping.put("deleted", employee.getDeleted());
 		return mapping;
 	}

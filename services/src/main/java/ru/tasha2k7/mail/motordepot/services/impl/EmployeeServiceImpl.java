@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import ru.tasha2k7.mail.motordepot.daodb.ApplicationDao;
 import ru.tasha2k7.mail.motordepot.daodb.EmployeeDao;
 import ru.tasha2k7.mail.motordepot.datamodel.Application;
 import ru.tasha2k7.mail.motordepot.datamodel.Car;
@@ -21,7 +22,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Inject
 	private EmployeeDao employeeDao;
-
+	
+	@Inject
+	private ApplicationDao applicationDao;
+	
 	@Override
 	public Long save(Employee employee) {
 		if (employee.getId() == null) {
@@ -44,19 +48,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public String getByStatus(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void markDeliveryTrip(Application application) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void markconditionVehical(Car car) {
+	public void markConditionVehical(Car car) {
 		// TODO Auto-generated method stub
 
 	}
@@ -65,6 +63,26 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public void updateStatus(Employee employee) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public Boolean appointedCar(Long driverId) {
+		Employee driver = employeeDao.getById(driverId);
+		
+		if ( driver.getCarId() != null ) {
+			return true;
+		} else
+			return false;
+	}
+
+	@Override
+	public Boolean emptyDriver(Long driverId) {
+		List<Long> appointedDriver = applicationDao.getAllIdAppointedDriver("distributed");
+		
+		if (appointedDriver.indexOf(driverId) == -1) {
+			return true;
+		} else
+			return false;
 	}
 
 }

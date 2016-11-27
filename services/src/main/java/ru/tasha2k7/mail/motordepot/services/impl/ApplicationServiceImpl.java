@@ -20,6 +20,7 @@ import ru.tasha2k7.mail.motordepot.datamodel.Application.ApplicationStatus;
 import ru.tasha2k7.mail.motordepot.datamodel.Car;
 import ru.tasha2k7.mail.motordepot.datamodel.Employee;
 import ru.tasha2k7.mail.motordepot.services.ApplicationService;
+import ru.tasha2k7.mail.motordepot.services.EmployeeService;
 
 @Service
 public class ApplicationServiceImpl implements ApplicationService {
@@ -34,6 +35,9 @@ public class ApplicationServiceImpl implements ApplicationService {
 	
 	@Inject
 	private EmployeeDao employeeDao;
+	
+	@Inject
+	private EmployeeService employeeService;
 
 	@Override
 	public Long save(Application application) {
@@ -70,33 +74,19 @@ public class ApplicationServiceImpl implements ApplicationService {
 			return true;
 		} else
 			return false;
-	}
-
+	}	
+	
 	@Override
-	public void appoint(Employee employee) {
-		//найти свободного водителя  : получить заявки действующие
-		//		List<Long> driverInTrip = null;
+	public void appoint(Long appId, Long driverId, Long dispatcherId) {
 		
-		
-		ApplicationStatus applicationStatus = ApplicationStatus.distributed;
-		List<Application> currentApplication = applicationDao.getAllByStatusApplication(applicationStatus);
-		
-		ArrayList<Long> allIdDrivers = (ArrayList<Long>) employeeDao.getAllIdByPosition("driver");		 		
-		
-		for (Application application : currentApplication) {
-			allIdDrivers.remove(application.getDriverId());
-			allIdDrivers.trimToSize();
-		}
-		ArrayList<Long> emptyDrivers = allIdDrivers;
-		
-		
-		/*for (Long driver: emptyDrivers){
-			if (driver != ) {
-					if ((MatchingSpecificationsVehicle(application.getId(), driver.getId())) ) {
-						//&& (carDao.getcondition(driver.getId()))
-					}
-				}
-			}
+		Application app = applicationDao.getById(appId);
+				
+		if ( app.getStatus() == ApplicationStatus.notDistributed
+				&& employeeService.emptyDriver(driverId)
+				&& (employeeService.appointedCar(driverId)) 
+				&& (сarDao.getcondition(employeeDao.getCarIdByDriverId(driverId))) 
+				&& MatchingSpecificationsVehicle(appId, employeeDao.getCarIdByDriverId(driverId))  ) {
+			applicationDao.appointApplication(appId, driverId, dispatcherId, "distributed");
 		}
 		
 		//получить список всех свободных авто
@@ -109,7 +99,17 @@ public class ApplicationServiceImpl implements ApplicationService {
 
 	@Override
 	public void canceled(Long id) {
+		applicationDao.changeStatus("canceled", id);
+	}
 
+	@Override
+	public List<Application> getAll() {
+		return applicationDao.getAll();
+	}
+
+	@Override
+	public List<Application> getAll(String status) {
+		return applicationDao.getAll(status);
 	}
 
 }

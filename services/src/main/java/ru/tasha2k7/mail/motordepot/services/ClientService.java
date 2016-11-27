@@ -16,6 +16,5 @@ public interface ClientService {
 	Long Registration(Client client);
 	
 	Client getById(Long id);
-
 	
 }

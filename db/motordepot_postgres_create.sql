@@ -1,4 +1,4 @@
-﻿set search_path to motordepot;
+set search_path to motordepot;
 
 CREATE TABLE "application" (
 	"id" serial NOT NULL,
@@ -57,7 +57,7 @@ CREATE TABLE "employee" (
 CREATE TABLE "car" (
 	"id" serial NOT NULL,
 	"make_model" character varying(256) NOT NULL,
-	"number_registration" character varying(256) NOT NULL,
+	"number_registration" character varying(256) NOT NULL UNIQUE,
 	"capacity_carrying_kg" real NOT NULL,
 	"length_dimensions_m" real NOT NULL,
 	"width_dimensions_m" real NOT NULL,
@@ -74,7 +74,7 @@ CREATE TABLE "car" (
 
 CREATE TABLE "client" (
 	"id" serial NOT NULL,
-	"name_client" character varying(512) NOT NULL,
+	"name_client" character varying(512) NOT NULL UNIQUE,
 	"address" character varying(512) NOT NULL,
 	"number_phone" character varying(256) NOT NULL,
 	"registration_data_id" bigint NOT NULL,
@@ -88,7 +88,7 @@ CREATE TABLE "client" (
 
 CREATE TABLE "role" (
 	"id" serial NOT NULL,
-	"name_role" character varying(128) NOT NULL,
+	"name_role" character varying(128) NOT NULL UNIQUE,
 	CONSTRAINT role_pk PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
@@ -106,11 +106,11 @@ CREATE TABLE "registration_2_role" (
 
 
 
-CREATE TABLE "registrationdata" (
+CREATE TABLE "registration_data" (
 	"id" serial NOT NULL,
-	"email" character varying(128) NOT NULL,
+	"email" character varying(128) NOT NULL UNIQUE,
 	"password" character varying(256) NOT NULL,
-	CONSTRAINT registrationdata_pk PRIMARY KEY ("id")
+	CONSTRAINT registration_data_pk PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
 );
@@ -123,14 +123,14 @@ ALTER TABLE "application" ADD CONSTRAINT "application_fk2" FOREIGN KEY ("dispatc
 ALTER TABLE "application" ADD CONSTRAINT "application_fk3" FOREIGN KEY ("driver_id") REFERENCES "employee"("id");
 
 
-ALTER TABLE "employee" ADD CONSTRAINT "employee_fk0" FOREIGN KEY ("registration_data_id") REFERENCES "registrationdata"("id");
+ALTER TABLE "employee" ADD CONSTRAINT "employee_fk0" FOREIGN KEY ("registration_data_id") REFERENCES "registration_data"("id");
 
 ALTER TABLE "car" ADD CONSTRAINT "car_fk0" FOREIGN KEY ("id") REFERENCES "employee"("id");
 
-ALTER TABLE "client" ADD CONSTRAINT "client_fk0" FOREIGN KEY ("registration_data_id") REFERENCES "registrationdata"("id");
+ALTER TABLE "client" ADD CONSTRAINT "client_fk0" FOREIGN KEY ("registration_data_id") REFERENCES "registration_data"("id");
 
 
-ALTER TABLE "registration_2_role" ADD CONSTRAINT "registration_2_role_fk0" FOREIGN KEY ("registration_id") REFERENCES "registrationdata"("id");
+ALTER TABLE "registration_2_role" ADD CONSTRAINT "registration_2_role_fk0" FOREIGN KEY ("registration_id") REFERENCES "registration_data"("id");
 ALTER TABLE "registration_2_role" ADD CONSTRAINT "registration_2_role_fk1" FOREIGN KEY ("role_id") REFERENCES "role"("id");
 
 

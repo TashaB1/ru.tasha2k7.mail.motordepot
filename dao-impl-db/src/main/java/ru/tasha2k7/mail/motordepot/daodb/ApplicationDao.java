@@ -22,4 +22,11 @@ public interface ApplicationDao extends GenericDao<Application, Long> {
 																						// определенным
 																						// статусом
 
+	List<Application> getAll(String status);
+	
+	void changeStatus(String status, Long appId);
+	
+	List<Long> getAllIdAppointedDriver(String status);  // id назначенных водителей
+
+	void appointApplication(Long appId, Long driverId, Long dispatcherId, String status);
 }
