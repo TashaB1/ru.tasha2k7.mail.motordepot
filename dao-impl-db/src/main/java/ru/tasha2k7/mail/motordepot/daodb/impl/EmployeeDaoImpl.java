@@ -21,7 +21,7 @@ import ru.tasha2k7.mail.motordepot.datamodel.Application.ApplicationStatus;
 public class EmployeeDaoImpl extends GenericDaoImpl<Employee, Long> implements EmployeeDao{
 
 	public EmployeeDaoImpl() {
-		super(Employee.class, "employee",EmployeeMapper.class,EmployeeDiMapperImpl.class);
+		super(Employee.class, "employee",EmployeeMapper.class);
 	}
 
 	@Inject

@@ -20,13 +20,12 @@ import ru.tasha2k7.mail.motordepot.daodb.dimapper.impl.ApplicationDiMapperImpl;
 import ru.tasha2k7.mail.motordepot.daodb.mapper.ApplicationMapper;
 import ru.tasha2k7.mail.motordepot.datamodel.Application;
 
-@Repository
 public abstract class GenericDaoImpl<T, PK extends Serializable> implements GenericDao<T, PK> {
 
 	@Inject
 	private JdbcTemplate jdbcTemplate;
 	private String dbTableName;// = new
-								// DBTableNameAnalyzer().getDBTableName(this.getGenericEntityClass());
+								// DBTableNameAnalyzer().getDBTableName(entityClass);//this.getGenericEntityClass());
 
 	/*
 	 * @SuppressWarnings("unchecked") private Class<T> entityClass1 = new
@@ -35,17 +34,15 @@ public abstract class GenericDaoImpl<T, PK extends Serializable> implements Gene
 	@Inject
 	private DiMapper<T> diMapper;
 
-	private Class<T> diMapper1;
 	private Class<T> entityClass;
 	private Class<T> mapper;
 
-	public GenericDaoImpl(Class<T> entityClass, String dbTabName, Class mapper, Class diMapper1) {
+	public GenericDaoImpl(Class entityClass, String dbTabName, Class mapper) {
 		this.entityClass = entityClass;
 		this.dbTableName = dbTabName;
-		this.diMapper1 = diMapper1;
 		this.mapper = mapper;
 	}
-
+	 
 	@SuppressWarnings("unchecked")
 	protected Class<T> getGenericEntityClass() {
 		ParameterizedType parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();

@@ -11,7 +11,7 @@ import ru.tasha2k7.mail.motordepot.datamodel.Role;
 public class RoleDaoImpl extends GenericDaoImpl<Role, Long> implements RoleDao {
 
 	public RoleDaoImpl() {
-		super(Role.class, "role", RoleMapper.class, RoleDiMapperImpl.class);
+		super(Role.class, "role", RoleMapper.class);
 	}
 
 }

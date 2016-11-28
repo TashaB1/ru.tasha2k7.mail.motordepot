@@ -36,13 +36,13 @@ public class ClientServiceTest {
 	public void saveTest() {
 		
 		RegistrationData registrationData = new RegistrationData();
-		registrationData.setEmail("client" + String.valueOf((int)(Math.random()*50))+ "@mail.ru");
+		registrationData.setEmail("client" + String.valueOf((int)(Math.random()*100))+ "@mail.ru");
 		registrationData.setPassword("123");
 		Long registrationDataId = registrationDataService.save(registrationData);
 		registrationData.setId(registrationDataId); //?
 		
 		Client client = new Client();
-        client.setNameClient("client" + String.valueOf((int)(Math.random()*50)));
+        client.setNameClient("client" + String.valueOf((int)(Math.random()*100)));
         client.setAddress("советская 3");
         client.setNumberPhone("444555666");
         client.setRegistrationData(registrationData);

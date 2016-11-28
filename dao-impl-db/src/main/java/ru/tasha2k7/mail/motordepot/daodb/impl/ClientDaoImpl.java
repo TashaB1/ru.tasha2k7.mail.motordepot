@@ -11,7 +11,7 @@ import ru.tasha2k7.mail.motordepot.datamodel.Client;
 public class ClientDaoImpl extends GenericDaoImpl<Client, Long> implements ClientDao{
 
 	public ClientDaoImpl() {
-		super(Client.class, "client", ClientMapper.class,ClientDiMapperImpl.class);
+		super(Client.class, "client", ClientMapper.class);
 	}
 
 }

@@ -1,10 +1,6 @@
 package ru.tasha2k7.mail.motordepot.services.impl;
 
-
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 import javax.inject.Inject;
 
@@ -18,7 +14,6 @@ import ru.tasha2k7.mail.motordepot.daodb.EmployeeDao;
 import ru.tasha2k7.mail.motordepot.datamodel.Application;
 import ru.tasha2k7.mail.motordepot.datamodel.Application.ApplicationStatus;
 import ru.tasha2k7.mail.motordepot.datamodel.Car;
-import ru.tasha2k7.mail.motordepot.datamodel.Employee;
 import ru.tasha2k7.mail.motordepot.services.ApplicationService;
 import ru.tasha2k7.mail.motordepot.services.EmployeeService;
 
@@ -32,10 +27,10 @@ public class ApplicationServiceImpl implements ApplicationService {
 
 	@Inject
 	private CarDao сarDao;
-	
+
 	@Inject
 	private EmployeeDao employeeDao;
-	
+
 	@Inject
 	private EmployeeService employeeService;
 
@@ -67,34 +62,33 @@ public class ApplicationServiceImpl implements ApplicationService {
 
 		Car specificationsVehicle = сarDao.SpecificationsVehicle(carId);
 
-		if  ((specificationsCargo.getWeightCargoKg() < specificationsVehicle.getCapacityCarryingKg()) 
+		if ((specificationsCargo.getWeightCargoKg() < specificationsVehicle.getCapacityCarryingKg())
 				&& (specificationsCargo.getLengthCargoM() < specificationsVehicle.getLengthDimensionsM())
 				&& (specificationsCargo.getWidthCargoM() < specificationsVehicle.getWidthDimensionsM())
-				&& (specificationsCargo.getHeigthCargoM() < specificationsVehicle.getHeigthDimensionsM()) ) {
+				&& (specificationsCargo.getHeigthCargoM() < specificationsVehicle.getHeigthDimensionsM())) {
 			return true;
 		} else
 			return false;
-	}	
-	
+	}
+
 	@Override
 	public void appoint(Long appId, Long driverId, Long dispatcherId) {
-		
+
 		Application app = applicationDao.getById(appId);
-				
-		if ( app.getStatus() == ApplicationStatus.notDistributed
-				&& employeeService.emptyDriver(driverId)
-				&& (employeeService.appointedCar(driverId)) 
-				&& (сarDao.getcondition(employeeDao.getCarIdByDriverId(driverId))) 
-				&& MatchingSpecificationsVehicle(appId, employeeDao.getCarIdByDriverId(driverId))  ) {
+
+		if (app.getStatus() == ApplicationStatus.notDistributed && employeeService.emptyDriver(driverId)
+				&& (employeeService.appointedCar(driverId))
+				&& (сarDao.getcondition(employeeDao.getCarIdByDriverId(driverId)))
+				&& MatchingSpecificationsVehicle(appId, employeeDao.getCarIdByDriverId(driverId))) {
 			applicationDao.appointApplication(appId, driverId, dispatcherId, "distributed");
 		}
-		
-		//получить список всех свободных авто
-		//найти среди них подходящее авто: 
-		//1. проверить состояние авто
-		//2. проверить соответствие габаритов 
-		
-		//обновить объект Заявка */
+
+		// получить список всех свободных авто
+		// найти среди них подходящее авто:
+		// 1. проверить состояние авто
+		// 2. проверить соответствие габаритов
+
+		// обновить объект Заявка */
 	}
 
 	@Override

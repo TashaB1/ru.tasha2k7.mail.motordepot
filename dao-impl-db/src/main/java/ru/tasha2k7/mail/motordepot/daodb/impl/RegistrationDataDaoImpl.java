@@ -14,7 +14,7 @@ import ru.tasha2k7.mail.motordepot.datamodel.RegistrationData;
 public class RegistrationDataDaoImpl extends GenericDaoImpl<RegistrationData, Long> implements RegistrationDataDao{
 
 	public RegistrationDataDaoImpl() {
-		super(RegistrationData.class,"registrationdata",RegistrationDataMapper.class,RegistrationDataDiMapperImpl.class);
+		super(RegistrationData.class,"registrationdata",RegistrationDataMapper.class);
 	}
 
 	@Inject

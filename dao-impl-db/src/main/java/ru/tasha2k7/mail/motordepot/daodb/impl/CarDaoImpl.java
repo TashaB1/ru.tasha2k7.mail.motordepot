@@ -16,7 +16,7 @@ import ru.tasha2k7.mail.motordepot.datamodel.Car;
 public class CarDaoImpl extends GenericDaoImpl<Car, Long> implements CarDao {
 
 	public CarDaoImpl() {
-		super(Car.class, "car", CarMapper.class, CarDiMapperImpl.class);
+		super(Car.class, "car", CarMapper.class);
 	}
 
 	@Inject

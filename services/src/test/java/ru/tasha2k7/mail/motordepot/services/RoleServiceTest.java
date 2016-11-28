@@ -17,7 +17,6 @@ public class RoleServiceTest {
 	private RoleService roleService;
 
 	@Test
-	@Ignore
 	public void saveTest() {
 		Role role = new Role();
 		role.setNameRole("proba");
@@ -34,7 +33,6 @@ public class RoleServiceTest {
 	
 	
 	@Test
-	@Ignore
 	public void getAllTest() {
 		roleService.getAll();
 		System.out.println(roleService.getAll().toString());

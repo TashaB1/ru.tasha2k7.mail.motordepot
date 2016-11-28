@@ -11,6 +11,6 @@ import ru.tasha2k7.mail.motordepot.datamodel.Trip;
 public class TripDaoImpl extends GenericDaoImpl<Trip, Long> implements TripDao {
 
 	public TripDaoImpl() {
-		super(Trip.class, "trip",TripMapper.class,TripDiMapperImpl.class);
+		super(Trip.class, "trip",TripMapper.class);
 	}
 }

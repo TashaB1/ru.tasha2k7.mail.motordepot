@@ -20,7 +20,7 @@ import ru.tasha2k7.mail.motordepot.datamodel.Application;
 public class ApplicationDaoImpl extends GenericDaoImpl<Application, Long> implements ApplicationDao {
 
 	public ApplicationDaoImpl() {
-		super(Application.class, "application", ApplicationMapper.class, ApplicationDiMapperImpl.class);
+		super(Application.class, "application", ApplicationMapper.class);
 	}
 
 	@Inject
