@@ -10,5 +10,52 @@
 	    <param-name>contextConfigLocation</param-name>
 	    <param-value>classpath:service-context.xml</param-value>
 	</context-param>
+	
+	<listener>
+   		<listener-class>
+        org.springframework.web.context.ContextLoaderListener
+   		</listener-class>
+	</listener> 	
+
+	<servlet>
+      <servlet-name>HelloWeb</servlet-name>
+      <servlet-class>
+         org.springframework.web.servlet.DispatcherServlet
+      </servlet-class>
+      <init-param>
+	    <param-name>contextConfigLocation</param-name>
+	    <param-value>classpath:web-applicationContext.xml</param-value>
+	</init-param>
+      <load-on-startup>1</load-on-startup>
+   </servlet>
+   
+   	<servlet>
+	   <servlet-name>ServletExample</servlet-name>
+	   <servlet-class>ru.tasha2k7.mail.motordepot.web.servlets.ServletExample</servlet-class>
+	</servlet>
+   
+
+   <servlet-mapping>
+      <servlet-name>HelloWeb</servlet-name>
+      <url-pattern>/</url-pattern>
+   </servlet-mapping>
+   
+   	<servlet-mapping>
+	   <servlet-name>ServletExample</servlet-name>
+	   <url-pattern>/myFirtsService</url-pattern>
+	</servlet-mapping>
+	
+	
+	<filter>
+	   <filter-name>LogFilter</filter-name>
+	   <filter-class>ru.tasha2k7.mail.motordepot.web.servlets.LogFilter</filter-class>
+	</filter>
+	
+	
+	<filter-mapping>
+	   <filter-name>LogFilter</filter-name>
+	   <url-pattern>/</url-pattern>
+	</filter-mapping>
+   
 
 </web-app>

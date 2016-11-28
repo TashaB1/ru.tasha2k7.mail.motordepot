@@ -15,7 +15,7 @@
 	    http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 
 	<context:annotation-config />
-
+	
 	<context:component-scan base-package="ru.tasha2k7.mail.motordepot.daodb.impl" />
 	<context:component-scan base-package="ru.tasha2k7.mail.motordepot.services.impl" />
 	<context:component-scan base-package="ru.tasha2k7.mail.motordepot.daodb.dimapper.impl"/>
