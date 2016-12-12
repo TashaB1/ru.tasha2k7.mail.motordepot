@@ -2,8 +2,11 @@ package ru.tasha2k7.mail.motordepot.daodb.impl;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -42,7 +45,7 @@ public abstract class GenericDaoImpl<T, PK extends Serializable> implements Gene
 		this.dbTableName = dbTabName;
 		this.mapper = mapper;
 	}
-	 
+
 	@SuppressWarnings("unchecked")
 	protected Class<T> getGenericEntityClass() {
 		ParameterizedType parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
@@ -75,26 +78,42 @@ public abstract class GenericDaoImpl<T, PK extends Serializable> implements Gene
 
 	@Override
 	public void update(T obj) {
-		StringBuilder sql = new StringBuilder("UPDATE " + dbTableName + " SET ");
+		StringBuilder sqlUpdate = new StringBuilder("update " + dbTableName + " set ");
 
 		Map<String, Object> map = diMapper.mapColumns(obj);
-		Object[] value = new Object[map.size()];
 
-		int index = 0;
-		for (Map.Entry<String, Object> entry : map.entrySet()) {
-			if (index < map.size() - 1) {
-				sql.append(entry.getKey().concat(" = ?"));
-				if (index < map.size() - 2) {
-					sql.append(",");
+		int i = 0;
+		for (Map.Entry<String, Object> pair : map.entrySet()) {
+
+			if (!pair.getKey().equals("id")) {
+				if (i < map.size() - 1) {
+					sqlUpdate.append(pair.getKey().concat(" = ?, "));
+				} else {
+					sqlUpdate.append(pair.getKey().concat(" = ? "));
 				}
-				sql.append(" ");
 			}
-			value[index] = entry.getValue();
-			index++;
+			i++;
 		}
-		sql.append("WHERE id = ?");
+		sqlUpdate.append(" where id = ? ");
 
-		jdbcTemplate.update(sql.toString(), value);
+		int j = 0;
+		int v =0;
+		Object id = null;
+		Object[] value = new Object[map.size()];
+		for (Map.Entry<String, Object> pair : map.entrySet()) {
+
+			if (!pair.getKey().equals("id") && j < map.size()) {
+				value[v] = pair.getValue();
+				v++;
+				} 
+			if (pair.getKey().equals("id")) {
+				id = pair.getValue();
+				}
+			j++;
+		}
+		value[map.size()-1] = id;
+
+		jdbcTemplate.update(sqlUpdate.toString(), value);
 	}
 
 	@Override

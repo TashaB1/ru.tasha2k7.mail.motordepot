@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import ru.tasha2k7.mail.motordepot.datamodel.Client;
 import ru.tasha2k7.mail.motordepot.datamodel.RegistrationData;
@@ -31,7 +32,7 @@ public class ClientServiceTest {
 		Assert.assertEquals(new Long(1), client.getId());
 	}
 	
-	
+	@Transactional
 	@Test
 	public void saveTest() {
 		

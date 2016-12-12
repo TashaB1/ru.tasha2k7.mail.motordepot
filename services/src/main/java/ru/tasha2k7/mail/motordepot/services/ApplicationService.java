@@ -8,13 +8,7 @@ import ru.tasha2k7.mail.motordepot.datamodel.Application;
 import ru.tasha2k7.mail.motordepot.datamodel.Employee;
 import ru.tasha2k7.mail.motordepot.datamodel.Role;
 
-public interface ApplicationService {
-
-	@Transactional
-	Long save(Application application);
-
-	@Transactional
-	void saveAll(List<Application> applications);
+public interface ApplicationService extends AbstractService<Application> {
 
 	Boolean MatchingSpecificationsVehicle(Long appId, Long carId); // соответствие
 																	// параметров
@@ -28,8 +22,6 @@ public interface ApplicationService {
 
 	@Transactional
 	void canceled(Long id); // отменить заявку
-
-	List<Application> getAll(); // для проверки
 
 	List<Application> getAll(String name); // для проверки
 

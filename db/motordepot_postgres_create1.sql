@@ -1,3 +1,5 @@
+set search_path to motordepot;
+
 CREATE TABLE "application" (
 	"id" serial NOT NULL,
 	"number_application" bigint NOT NULL UNIQUE,
@@ -97,7 +99,8 @@ CREATE TABLE "role" (
 
 CREATE TABLE "registration_2_role" (
 	"registration_id" bigint NOT NULL,
-	"role_id" bigint NOT NULL
+	"role_id" bigint NOT NULL,
+	UNIQUE(registration_id, role_id)
 ) WITH (
   OIDS=FALSE
 );

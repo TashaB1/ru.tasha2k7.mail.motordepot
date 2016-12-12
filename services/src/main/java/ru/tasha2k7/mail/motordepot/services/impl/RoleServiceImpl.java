@@ -51,6 +51,12 @@ public class RoleServiceImpl implements RoleService {
 		return roleDao.getAll();
 	}
 
+	@Override
+	public void delete(Long id) {
+		roleDao.delete(id);
+		
+	}
+
 
 	
 	

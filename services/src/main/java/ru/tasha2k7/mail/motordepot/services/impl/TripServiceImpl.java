@@ -41,4 +41,19 @@ public class TripServiceImpl implements TripService {
 		}
 	}
 
+	@Override
+	public Trip getById(Long id) {
+		return tripDao.getById(id);
+	}
+
+	@Override
+	public List<Trip> getAll() {
+		return tripDao.getAll();
+	}
+
+	@Override
+	public void delete(Long id) {
+		tripDao.delete(id);		
+	}
+
 }

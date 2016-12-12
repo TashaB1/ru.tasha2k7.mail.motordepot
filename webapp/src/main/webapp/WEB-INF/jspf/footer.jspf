@@ -1,0 +1,9 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<footer>
+            <div>
+                <span>Система Автобаза 2016</span>
+            </div>
+        </footer>
+    </body>
+</html>

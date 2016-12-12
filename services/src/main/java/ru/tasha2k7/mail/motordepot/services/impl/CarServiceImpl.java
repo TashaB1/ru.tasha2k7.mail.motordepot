@@ -41,4 +41,20 @@ public class CarServiceImpl implements CarService {
 		}
 	}
 
+	@Override
+	public Car getById(Long id) {
+		return carDao.getById(id);
+	}
+
+	@Override
+	public List<Car> getAll() {
+		return carDao.getAll();
+	}
+
+	@Override
+	public void delete(Long id) {
+		carDao.delete(id);
+		
+	}
+
 }

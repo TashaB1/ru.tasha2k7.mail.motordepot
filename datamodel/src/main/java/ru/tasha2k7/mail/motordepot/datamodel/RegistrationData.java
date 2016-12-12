@@ -5,16 +5,17 @@ import java.util.List;
 import ru.tasha2k7.mail.motordepot.annotation.DBTableName;
 import ru.tasha2k7.mail.motordepot.annotation.DaoMetadata;
 
-@DBTableName(name = "data")
+@DBTableName(name = "registrationdata")
 @DaoMetadata(entity = RegistrationData.class)
 public class RegistrationData extends AbstractModel {
 
 	private String email;
 	private String password;
+	private Long roleId;
 
 	private Employee employee;
 	private Client client;
-	private List<Role> role;
+	private List<Role> role; 
 
 	public String getEmail() {
 		return email;
@@ -48,6 +49,20 @@ public class RegistrationData extends AbstractModel {
 		this.client = client;
 	}
 
+	public Long getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(Long roleId) {
+		this.roleId = roleId;
+	}
+
+	@Override
+	public String toString() {
+		return "RegistrationData [email=" + email + ", password=" + password + ", roleId=" + roleId + ", employee="
+				+ employee + ", client=" + client + "]";
+	}
+
 	public List<Role> getRole() {
 		return role;
 	}
@@ -56,9 +71,6 @@ public class RegistrationData extends AbstractModel {
 		this.role = role;
 	}
 
-	@Override
-	public String toString() {
-		return "RegistrationData [email=" + email + ", password=" + password + "]";
-	}
+	
 
 }

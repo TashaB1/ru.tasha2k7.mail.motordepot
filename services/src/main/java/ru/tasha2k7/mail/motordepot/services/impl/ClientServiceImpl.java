@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import ru.tasha2k7.mail.motordepot.daodb.ClientDao;
+import ru.tasha2k7.mail.motordepot.datamodel.Application;
 import ru.tasha2k7.mail.motordepot.datamodel.Client;
 import ru.tasha2k7.mail.motordepot.services.ClientService;
 
@@ -51,4 +52,15 @@ public class ClientServiceImpl implements ClientService{
 			save(client);
 		}
 	}
+		
+	@Override
+	public List<Client> getAll() {
+		return clientDao.getAll();
+	}
+
+	@Override
+	public void delete(Long id) {
+		clientDao.delete(id);		
+	}
+
 }

@@ -85,4 +85,20 @@ public class EmployeeServiceImpl implements EmployeeService {
 			return false;
 	}
 
+	@Override
+	public Employee getById(Long id) {
+		return employeeDao.getById(id);
+	}
+
+	@Override
+	public List<Employee> getAll() {
+		return employeeDao.getAll();
+	}
+
+	@Override
+	public void delete(Long id) {
+		employeeDao.delete(id);
+		
+	}
+
 }

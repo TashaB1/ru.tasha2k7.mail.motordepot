@@ -106,4 +106,15 @@ public class ApplicationServiceImpl implements ApplicationService {
 		return applicationDao.getAll(status);
 	}
 
+	@Override
+	public Application getById(Long id) {
+		return applicationDao.getById(id);
+	}
+
+	@Override
+	public void delete(Long id) {
+		applicationDao.delete(id);
+		
+	}
+
 }

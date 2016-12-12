@@ -1,15 +1,15 @@
 package ru.tasha2k7.mail.motordepot.services;
 
-import java.util.List;
-
-import org.springframework.transaction.annotation.Transactional;
 import ru.tasha2k7.mail.motordepot.datamodel.RegistrationData;
 
-public interface RegistrationDataService {
+public interface RegistrationDataService extends AbstractService<RegistrationData> {
 
-	@Transactional
-	Long save(RegistrationData registrationData);
+	RegistrationData findByEmail(String email);
 
-	@Transactional
-	void saveAll(List<RegistrationData> registrationData);
+	RegistrationData getRegistrationData(Long id);
+	
+	boolean validateEmailPassword(String email, String password);
+	
+	String getRoleName(String email);
+
 }

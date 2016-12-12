@@ -3,11 +3,22 @@ package ru.tasha2k7.mail.motordepot.web.model;
 import java.util.Date;
 
 public class ClientModel {
+	private Long id;
 	private String nameClient;
 	private String address;
 	private String numberPhone;
 	private Long registrationDataId;
 	private Date deleted;
+
+	private RegistrationDataModel registrationDataModel;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getNameClient() {
 		return nameClient;
@@ -47,6 +58,14 @@ public class ClientModel {
 
 	public void setDeleted(Date deleted) {
 		this.deleted = deleted;
+	}
+
+	public RegistrationDataModel getRegistrationDataModel() {
+		return registrationDataModel;
+	}
+
+	public void setRegistrationDataModel(RegistrationDataModel registrationDataModel) {
+		this.registrationDataModel = registrationDataModel;
 	}
 
 	@Override

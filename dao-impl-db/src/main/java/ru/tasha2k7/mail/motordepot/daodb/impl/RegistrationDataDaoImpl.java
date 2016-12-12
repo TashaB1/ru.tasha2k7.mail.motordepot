@@ -22,14 +22,20 @@ public class RegistrationDataDaoImpl extends GenericDaoImpl<RegistrationData, Lo
 	
 	@Override
 	public RegistrationData findByEmail(String email) {
-		return jdbcTemplate.queryForObject("select * from registration_data where email = ?", new Object[] { email },
+		return jdbcTemplate.queryForObject("select * from registrationdata where email = ?", new Object[] { email },
 				new RegistrationDataMapper());
 	}
 
 	@Override
 	public RegistrationData getRegistrationData(Long id) {
-		return jdbcTemplate.queryForObject("select * from registration_data where id = ?", new Object[] { id },
+		return jdbcTemplate.queryForObject("select * from registrationdata where id = ?", new Object[] { id },
 				new RegistrationDataMapper());
+	}
+
+	@Override
+	public String getRoleName(String email) {
+		return jdbcTemplate.queryForObject("select r.name_role from registrationdata rd left join role r on rd.role_id=r.id where rd.email = ?", String.class, email);
+		
 	}
 
 }

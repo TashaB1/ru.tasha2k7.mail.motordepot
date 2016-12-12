@@ -7,5 +7,7 @@ public interface RegistrationDataDao extends GenericDao<RegistrationData, Long> 
 	RegistrationData findByEmail(String email);
 	
 	RegistrationData getRegistrationData(Long id);
+	
+	String getRoleName(String email);
 
 }
