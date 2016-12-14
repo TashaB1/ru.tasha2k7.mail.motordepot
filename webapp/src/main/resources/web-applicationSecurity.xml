@@ -3,13 +3,16 @@
 	xmlns:beans="http://www.springframework.org/schema/beans" 
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:sec="http://www.springframework.org/schema/security"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
                     http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                    	    http://www.springframework.org/schema/context 
+	    			http://www.springframework.org/schema/context/spring-context-3.2.xsd 
                     http://www.springframework.org/schema/security 
                     http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
-	
-	
+<context:annotation-config />
+<context:component-scan base-package="ru.tasha2k7.mail.motordepot.web.security"/>
 	
 	<http pattern="/css/**" security="none" />
 
@@ -17,24 +20,13 @@
 		<intercept-url pattern="/admin/**" access="ROLE_ADMIN" />
 		<intercept-url pattern="/dispatcher/**" access="ROLE_DISPATCER" />
 		<intercept-url pattern="/driver/**" access="ROLE_DRIVER" />
-		<intercept-url pattern="/client/**" access="ROLE_CLIENT" />
+		<intercept-url pattern="/client/**" access="hasRole('ROLE_CLIENT')" />
 		
-		<http-basic entry-point-ref="сustomBasicAuthenticationEntryPoint" />
+		<http-basic entry-point-ref=" customBasicAuthenticationEntryPoint" />
 	</http>
-
 	<authentication-manager erase-credentials="true"
 		alias="authenticationManager">
-		<authentication-provider user-service-ref="customUserDetailsService">
-			<password-encoder ref="passwordEncoder" base64="true" />
-			<user-service>
-				<user name="admin" password="adminpassword"
-					authorities="ROLE_USER, ROLE_ADMIN,ROLE_DISPATCHER,ROLE_DRIVER" />
-				<user name="user" password="userpassword" authorities="ROLE_USER" />
-				<user name="dispatcher" password="dispatcherpassword"
-					authorities="ROLE_DISPATCHER" />
-				<user name="driver" password="driverpassword" authorities="ROLE_DRIVER" />
-			</user-service>
-		</authentication-provider>
+		<authentication-provider user-service-ref="customUserDetailsService"/>
 	</authentication-manager>
 
 	

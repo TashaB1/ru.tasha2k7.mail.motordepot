@@ -11,9 +11,11 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import ru.tasha2k7.mail.motordepot.services.RegistrationDataService;
 
+@Component
 public class BasicAuthFilter implements Filter {
 	
     private RegistrationDataService registrationDataService;

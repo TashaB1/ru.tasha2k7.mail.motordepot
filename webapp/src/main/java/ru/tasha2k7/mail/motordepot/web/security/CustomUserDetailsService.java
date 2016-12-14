@@ -1,8 +1,10 @@
 package ru.tasha2k7.mail.motordepot.web.security;
 
+
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -16,11 +18,17 @@ import ru.tasha2k7.mail.motordepot.daodb.RegistrationDataDao;
 import ru.tasha2k7.mail.motordepot.datamodel.RegistrationData;
 import ru.tasha2k7.mail.motordepot.datamodel.Role;
 
+
 @Component
 public class CustomUserDetailsService implements UserDetailsService {
 
 	@Inject
 	private RegistrationDataDao registrationDataDao;
+	
+	@PostConstruct
+	protected void init(){
+		System.out.println();
+	}
 	
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -31,7 +39,8 @@ public class CustomUserDetailsService implements UserDetailsService {
         for (Role role : registrationData.getRole()) {
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getNameRole()));
         }
-        return new org.springframework.security.core.userdetails.User(registrationData.getEmail(), registrationData.getPassword(), grantedAuthorities);
+        return new org.springframework.security.core.userdetails.User(registrationData.getEmail(), 
+        		registrationData.getPassword(), grantedAuthorities);
 	}
 
 }
