@@ -18,6 +18,11 @@
 		</dependency>
 
 		<dependency>
+			<groupId>ru.tasha2k7.mail.motordepot</groupId>
+			<artifactId>dao-impl-xml</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 		</dependency>
@@ -29,8 +34,8 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
 		</dependency>
-		
-		
+
+
 		<!-- logger -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
@@ -48,7 +53,11 @@
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-jcl</artifactId>
 		</dependency>
-		<!--  -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>apache-log4j-extras</artifactId>
+		</dependency>
+		<!-- -->
 
 	</dependencies>
 

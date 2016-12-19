@@ -5,8 +5,6 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import ru.tasha2k7.mail.motordepot.datamodel.Application;
-import ru.tasha2k7.mail.motordepot.datamodel.Employee;
-import ru.tasha2k7.mail.motordepot.datamodel.Role;
 
 public interface ApplicationService extends AbstractService<Application> {
 
@@ -20,9 +18,12 @@ public interface ApplicationService extends AbstractService<Application> {
 	void appoint(Long appId, Long driverId, Long dispatcherId); // назначить
 																// заявку
 
-	@Transactional
-	void canceled(Long id); // отменить заявку
+//	@Transactional
+//	void canceled(Long id); // отменить заявку
 
-	List<Application> getAll(String name); // для проверки
+	@Transactional
+	void changeStatus(String status, Long id); // отменить заявку "canceled"
+
+	List<Application> getAll(String status); // для проверки
 
 }

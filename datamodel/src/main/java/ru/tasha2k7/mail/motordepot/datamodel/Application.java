@@ -6,7 +6,7 @@ import ru.tasha2k7.mail.motordepot.annotation.DBTableName;
 import ru.tasha2k7.mail.motordepot.annotation.DaoMetadata;
 
 @DBTableName(name = "application")
-@DaoMetadata(entity = Application.class)
+@DaoMetadata(mapper = Application.class)
 public class Application extends AbstractModel {
 
 	public enum ApplicationStatus {

@@ -47,7 +47,7 @@ public class AuthController {
 			}
 		} else {
 
-			return "login";
+			return "login1";
 		}
 		return "index";
 	}

@@ -15,16 +15,13 @@ import org.springframework.http.HttpHeaders;
 
 import org.springframework.http.MediaType;
 
-import ru.tasha2k7.mail.motordepot.daodb.ClientDao;
-import ru.tasha2k7.mail.motordepot.datamodel.Client;
-import ru.tasha2k7.mail.motordepot.services.ClientService;
-
+import ru.tasha2k7.mail.motordepot.daoapi.IClientDao;
 
 @SuppressWarnings("serial")
 public class ServletExample extends HttpServlet {
 	
 	@Inject
-	private ClientService clientService;
+	private IClientDao clientService;
 	
 	
 	public static final String REST_SERVICE_URI = "http://localhost:8080/basicAuthSecured";

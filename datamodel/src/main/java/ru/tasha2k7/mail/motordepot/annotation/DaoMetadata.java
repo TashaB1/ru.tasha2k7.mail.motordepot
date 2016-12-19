@@ -13,8 +13,9 @@ public @interface DaoMetadata {
 	//String name() default ""; // default - говорит про то, что метод по
 	// умолчанию будет возвращать определённое
 	// значение
+
+	Class<?> mapper() default Void.class;
 	
-	Class<?> entity();// default Void.class;
-	//Class<?> mapper() default Void.class;
+	
 	//Class<?> dimapper() default Void.class;
 }

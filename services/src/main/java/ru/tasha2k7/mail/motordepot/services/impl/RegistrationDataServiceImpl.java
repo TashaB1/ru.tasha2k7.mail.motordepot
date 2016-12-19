@@ -8,8 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import ru.tasha2k7.mail.motordepot.daodb.EmployeeDao;
-import ru.tasha2k7.mail.motordepot.daodb.RegistrationDataDao;
+import ru.tasha2k7.mail.motordepot.daoapi.IRegistrationDataDao;
 import ru.tasha2k7.mail.motordepot.datamodel.RegistrationData;
 import ru.tasha2k7.mail.motordepot.services.EmployeeService;
 import ru.tasha2k7.mail.motordepot.services.RegistrationDataService;
@@ -20,7 +19,7 @@ public class RegistrationDataServiceImpl implements RegistrationDataService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationDataServiceImpl.class);
 
 	@Inject
-	private RegistrationDataDao registrationDataDao;
+	private IRegistrationDataDao registrationDataDao;
 
 	@Override
 	public Long save(RegistrationData registrationData) {
@@ -86,6 +85,16 @@ public class RegistrationDataServiceImpl implements RegistrationDataService {
 	@Override
 	public String getRoleName(String email) {
 		return registrationDataDao.getRoleName(email);
+	}
+
+	@Override
+	public Long findTotalRecords() {
+		return registrationDataDao.findTotalRecords();
+	}
+
+	@Override
+	public Long getSequence() {
+		return registrationDataDao.getSequence();
 	}
 
 }

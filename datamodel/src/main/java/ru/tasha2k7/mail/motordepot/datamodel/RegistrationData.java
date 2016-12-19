@@ -6,7 +6,7 @@ import ru.tasha2k7.mail.motordepot.annotation.DBTableName;
 import ru.tasha2k7.mail.motordepot.annotation.DaoMetadata;
 
 @DBTableName(name = "registrationdata")
-@DaoMetadata(entity = RegistrationData.class)
+@DaoMetadata(mapper = RegistrationData.class)
 public class RegistrationData extends AbstractModel {
 
 	private String email;
@@ -15,7 +15,7 @@ public class RegistrationData extends AbstractModel {
 
 	private Employee employee;
 	private Client client;
-	private List<Role> role; 
+	private Role role; 
 
 	public String getEmail() {
 		return email;
@@ -57,18 +57,19 @@ public class RegistrationData extends AbstractModel {
 		this.roleId = roleId;
 	}
 
-	@Override
-	public String toString() {
-		return "RegistrationData [email=" + email + ", password=" + password + ", roleId=" + roleId + ", employee="
-				+ employee + ", client=" + client + "]";
-	}
-
-	public List<Role> getRole() {
+	
+	public Role getRole() {
 		return role;
 	}
 
-	public void setRole(List<Role> role) {
+	public void setRole(Role role) {
 		this.role = role;
+	}
+
+	@Override
+	public String toString() {
+		return "RegistrationData [email=" + email + ", password=" + password + ", roleId=" + roleId + ", employee="
+				+ employee + ", client=" + client + ", role=" + role + "]";
 	}
 
 	

@@ -22,13 +22,39 @@
 			<AppenderRef ref="Console" />
 		</Root>
 
-		<Logger level="info" name="com.epam.training.library"
+		<Logger level="info" name="ru.tasha2k7.mail.motordepot"
 			additivity="false">
 			<AppenderRef ref="Console" />
 			<AppenderRef ref="RollingFile" />
 		</Logger>
 
 	</Loggers>
+
+
+	<!--  <appender name="ErrorEmailAppender" class="org.apache.log4j.net.SMTPAppender">
+		<param name="SMTPHost" value="mail.mydomain.com" />
+		<param name="SMTPUsername" value="myuser@mydomain.com" />
+		<param name="SMTPPassword" value="password" />
+		<param name="From" value="myuser@mydomain.com" />
+		<param name="To" value="myuser@mydomain.com" />
+		<param name="Subject" value="Log of messages" />
+		<param name="BufferSize" value="1" />
+		<param name="EvaluatorClass" value="TriggerLogEvent" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%t %m%n" />
+		</layout>
+	</appender>
+
+	<logger name="com.foo.mailer">
+		<level value="INFO" />
+		<appender-ref ref="ErrorEmailAppender" />
+	</logger>  -->
+
+	<!-- Если ваше приложение деплоится в различных временных зонах, то удобно 
+		писать логи в UTC apache-log4j-extras.jar. -->
+	<!-- <layout class="org.apache.log4j.EnhancedPatternLayout"> -->
+	<!-- <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm.SSS}{UTC} 
+		name %5p \[%t\] %c{1} - %m%n"></layout> -->
 
 
 </Configuration>

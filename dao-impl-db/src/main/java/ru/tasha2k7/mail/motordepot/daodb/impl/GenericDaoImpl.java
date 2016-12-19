@@ -2,34 +2,27 @@ package ru.tasha2k7.mail.motordepot.daodb.impl;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 import javax.inject.Inject;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-import org.springframework.stereotype.Repository;
 
-import ru.tasha2k7.mail.motordepot.annotation.analyzer.DBTableNameAnalyzer;
 import ru.tasha2k7.mail.motordepot.annotation.analyzer.DaoMetadataAnalyzer;
-import ru.tasha2k7.mail.motordepot.daodb.GenericDao;
+import ru.tasha2k7.mail.motordepot.daoapi.IGenericDao;
 import ru.tasha2k7.mail.motordepot.daodb.dimapper.DiMapper;
-import ru.tasha2k7.mail.motordepot.daodb.dimapper.impl.ApplicationDiMapperImpl;
-import ru.tasha2k7.mail.motordepot.daodb.mapper.ApplicationMapper;
-import ru.tasha2k7.mail.motordepot.datamodel.Application;
 
-public abstract class GenericDaoImpl<T, PK extends Serializable> implements GenericDao<T, PK> {
+public abstract class GenericDaoImpl<T, PK extends Serializable> implements IGenericDao<T, PK> {
 
 	@Inject
 	private JdbcTemplate jdbcTemplate;
 	private String dbTableName;// = new
 								// DBTableNameAnalyzer().getDBTableName(entityClass);//this.getGenericEntityClass());
-
+T t;
+	
 	/*
 	 * @SuppressWarnings("unchecked") private Class<T> entityClass1 = new
 	 * DaoMetadataAnalyzer().getEntityClass();
@@ -44,6 +37,12 @@ public abstract class GenericDaoImpl<T, PK extends Serializable> implements Gene
 		this.entityClass = entityClass;
 		this.dbTableName = dbTabName;
 		this.mapper = mapper;
+	}
+	
+	public PK getSequence(){
+		return (PK) jdbcTemplate.queryForObject("select last_value from motordepot." + dbTableName + "_id_seq " , Long.class);
+		//select last_value from motordepot.client_id_seq
+
 	}
 
 	@SuppressWarnings("unchecked")
@@ -97,7 +96,7 @@ public abstract class GenericDaoImpl<T, PK extends Serializable> implements Gene
 		sqlUpdate.append(" where id = ? ");
 
 		int j = 0;
-		int v =0;
+		int v = 0;
 		Object id = null;
 		Object[] value = new Object[map.size()];
 		for (Map.Entry<String, Object> pair : map.entrySet()) {
@@ -105,13 +104,13 @@ public abstract class GenericDaoImpl<T, PK extends Serializable> implements Gene
 			if (!pair.getKey().equals("id") && j < map.size()) {
 				value[v] = pair.getValue();
 				v++;
-				} 
+			}
 			if (pair.getKey().equals("id")) {
 				id = pair.getValue();
-				}
+			}
 			j++;
 		}
-		value[map.size()-1] = id;
+		value[map.size() - 1] = id;
 
 		jdbcTemplate.update(sqlUpdate.toString(), value);
 	}

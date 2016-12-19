@@ -1,5 +1,6 @@
 package ru.tasha2k7.mail.motordepot.services.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -8,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import ru.tasha2k7.mail.motordepot.daodb.CarDao;
+import ru.tasha2k7.mail.motordepot.daoapi.ICarDao;
 import ru.tasha2k7.mail.motordepot.datamodel.Car;
 import ru.tasha2k7.mail.motordepot.services.CarService;
 
@@ -18,7 +19,7 @@ public class CarServiceImpl implements CarService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(CarServiceImpl.class);
 
 	@Inject
-	private CarDao carDao;
+	private ICarDao carDao;
 
 	@Override
 	public Long save(Car car) {
@@ -54,7 +55,24 @@ public class CarServiceImpl implements CarService {
 	@Override
 	public void delete(Long id) {
 		carDao.delete(id);
-		
+
 	}
+
+	@Override
+	public Long findTotalRecords() {
+		return carDao.findTotalRecords();
+	}
+
+	@Override
+	public Long getSequence() {
+		return carDao.getSequence();
+	}
+
+	@Override
+	public void deleted(Long id, Date date) {
+		carDao.deleted(id, date);		
+	}
+	
+	
 
 }

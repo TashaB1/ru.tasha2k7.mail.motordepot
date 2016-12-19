@@ -15,6 +15,7 @@ public class RegistrationDataMapper implements RowMapper<RegistrationData> {
 		entity.setId(rs.getLong("id"));
 		entity.setEmail(rs.getString("email"));
 		entity.setPassword(rs.getString("password"));
+		entity.setRoleId(rs.getLong("role_id"));
 		return entity;
 	}
 

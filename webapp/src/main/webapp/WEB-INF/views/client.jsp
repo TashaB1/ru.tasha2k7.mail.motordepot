@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
@@ -9,6 +10,12 @@
 <title>Client Page</title>
 
 <style type="text/css">
+body {
+	text-align: center;
+}
+table {
+	margin: auto; /* Выравниваем таблицу по центру окна  */
+}
 .tg {
 	border-collapse: collapse;
 	border-spacing: 0;
@@ -54,12 +61,6 @@
 
 	<h1>Client List</h1>
 
-
-	<sec:authorize access="isAuthenticated()">
-		<a href="<c:url value="/j_spring_security_logout"/>">Logout</a>
-	</sec:authorize>
-
-
 	<input type="search" name="search" placeholder="Search" />
 	<input type="submit" value="Search">
 	<br />
@@ -92,17 +93,7 @@
 	<h1>Add a Book</h1>
 
 	<c:url var="addAction" value="/clientAll/add" />
-	<br />
-	<br /> This page has the following HTTP headers:
-	<br />
-	<ol>
-		<%-- 'param' is an implicit object. It is a Map that maps a 'key'
-           (the parameter name) to a 'value' --%>
-		<c:forEach var="nextHeader" items="${header}">
-			<li><c:out value="${nextHeader.key}" /> = <c:out
-					value="${nextHeader.value}" />
-		</c:forEach>
-	</ol>
+
 
 	<br />
 	<br />

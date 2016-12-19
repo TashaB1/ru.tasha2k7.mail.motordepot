@@ -10,11 +10,14 @@ import ru.tasha2k7.mail.motordepot.datamodel.Application;
 
 public class ApplicationMapper implements RowMapper<Application>{
 
+	/*implement abstract method for declaring mapping
+     *between POJO attributes and relational table attributes
+     */
+	
 	@Override
 	public Application mapRow(ResultSet rs, int rowNum) throws SQLException {
 		Long id = rs.getLong("id");
-		
-		
+				
 		Application entity = new Application();
         entity.setId(id);
         entity.setNumberApplication(rs.getLong("number_application"));

@@ -13,23 +13,26 @@
 
 <context:annotation-config />
 <context:component-scan base-package="ru.tasha2k7.mail.motordepot.web.security"/>
+<context:component-scan base-package="ru.tasha2k7.mail.motordepot.web.filters"/>
 	
 	<http pattern="/css/**" security="none" />
+	<http pattern="/login1.jsp*" security="none" />
 
-	<http auto-config="true" use-expressions="true" create-session="never">
+	<http  use-expressions="true" create-session="never" auto-config="true">
 		<intercept-url pattern="/admin/**" access="ROLE_ADMIN" />
 		<intercept-url pattern="/dispatcher/**" access="ROLE_DISPATCER" />
 		<intercept-url pattern="/driver/**" access="ROLE_DRIVER" />
 		<intercept-url pattern="/client/**" access="hasRole('ROLE_CLIENT')" />
-		
-		<http-basic entry-point-ref=" customBasicAuthenticationEntryPoint" />
+	<!-- 	<custom-filter position="BASIC_AUTH_FILTER" ref="basicAuthFilter" /> -->
+		<http-basic entry-point-ref="customBasicAuthenticationEntryPoint" />
+		 <form-login login-page='/login1.jsp'/>
 	</http>
 	<authentication-manager erase-credentials="true"
 		alias="authenticationManager">
 		<authentication-provider user-service-ref="customUserDetailsService"/>
 	</authentication-manager>
 
-	
+
 
 	<!-- Использование выражений Spring Security в методах -->
 	<sec:global-method-security

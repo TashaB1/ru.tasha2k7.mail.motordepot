@@ -10,4 +10,11 @@
 	<artifactId>dao-api</artifactId>
 	<packaging>jar</packaging>
 
+	<dependencies>
+		<dependency>
+			<groupId>ru.tasha2k7.mail.motordepot</groupId>
+			<artifactId>datamodel</artifactId>
+		</dependency>
+	</dependencies>
+
 </project>

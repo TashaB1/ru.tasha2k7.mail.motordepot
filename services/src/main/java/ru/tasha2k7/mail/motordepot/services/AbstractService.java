@@ -18,4 +18,8 @@ public interface AbstractService<T> {
 
 	@Transactional
 	void delete(Long id);
+	
+	Long findTotalRecords();
+	
+	Long getSequence();
 }

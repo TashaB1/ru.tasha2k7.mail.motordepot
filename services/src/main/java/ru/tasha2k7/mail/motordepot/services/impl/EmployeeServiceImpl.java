@@ -1,5 +1,6 @@
 package ru.tasha2k7.mail.motordepot.services.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -8,9 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import ru.tasha2k7.mail.motordepot.daodb.ApplicationDao;
-import ru.tasha2k7.mail.motordepot.daodb.EmployeeDao;
+import ru.tasha2k7.mail.motordepot.daoapi.IApplicationDao;
+import ru.tasha2k7.mail.motordepot.daoapi.ICarDao;
+import ru.tasha2k7.mail.motordepot.daoapi.IEmployeeDao;
 import ru.tasha2k7.mail.motordepot.datamodel.Application;
+import ru.tasha2k7.mail.motordepot.datamodel.Application.ApplicationStatus;
 import ru.tasha2k7.mail.motordepot.datamodel.Car;
 import ru.tasha2k7.mail.motordepot.datamodel.Employee;
 import ru.tasha2k7.mail.motordepot.services.EmployeeService;
@@ -21,18 +24,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeServiceImpl.class);
 
 	@Inject
-	private EmployeeDao employeeDao;
-	
+	private IEmployeeDao employeeDao;
+
 	@Inject
-	private ApplicationDao applicationDao;
-	
+	private IApplicationDao applicationDao;
+
+	@Inject
+	private ICarDao carDao;
+
 	@Override
 	public Long save(Employee employee) {
 		if (employee.getId() == null) {
 			Long id = employeeDao.insert(employee);
-			LOGGER.info("Employee created."); // id={}, ... ",
-												// application.getId(), ...
-												// );
+			LOGGER.info("Employee created.");
 			return id;
 		} else {
 			employeeDao.update(employee);
@@ -49,27 +53,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public void markDeliveryTrip(Application application) {
-		// TODO Auto-generated method stub
-
+		applicationDao.update(application);
 	}
 
 	@Override
 	public void markConditionVehical(Car car) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void updateStatus(Employee employee) {
-		// TODO Auto-generated method stub
-
+		carDao.update(car);
 	}
 
 	@Override
 	public Boolean appointedCar(Long driverId) {
 		Employee driver = employeeDao.getById(driverId);
-		
-		if ( driver.getCarId() != null ) {
+
+		if (driver.getCarId() != null) {
 			return true;
 		} else
 			return false;
@@ -77,8 +73,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public Boolean emptyDriver(Long driverId) {
-		List<Long> appointedDriver = applicationDao.getAllIdAppointedDriver("distributed");
-		
+		List<Long> appointedDriver = applicationDao.getAllIdAppointedDriver(ApplicationStatus.distributed.name());
+
 		if (appointedDriver.indexOf(driverId) == -1) {
 			return true;
 		} else
@@ -98,7 +94,21 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public void delete(Long id) {
 		employeeDao.delete(id);
-		
+	}
+
+	@Override
+	public Long findTotalRecords() {
+		return employeeDao.findTotalRecords();
+	}
+
+	@Override
+	public Long getSequence() {
+		return employeeDao.getSequence();
+	}
+
+	@Override
+	public void deleted(Long id, Date date) {
+		employeeDao.deleted(id, date);
 	}
 
 }

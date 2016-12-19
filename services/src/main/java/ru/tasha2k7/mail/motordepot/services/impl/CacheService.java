@@ -16,8 +16,7 @@ public class CacheService {
 
                     @Override
                     public void run() {
-                        System.out
-                                .println("Shutdown hook!!!!!!!!!!!!!!!!!!");
+                       
                     }
                 }));
 
@@ -25,7 +24,7 @@ public class CacheService {
 
     @PreDestroy
     private void onShutDown() {
-        System.out.println("onShutDown!!!!!!!!!!!!!!!!!!");
+       
     }
 
 }

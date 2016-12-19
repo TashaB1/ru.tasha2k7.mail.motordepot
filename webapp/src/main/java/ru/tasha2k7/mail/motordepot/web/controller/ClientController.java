@@ -17,14 +17,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ru.tasha2k7.mail.motordepot.datamodel.Client;
 import ru.tasha2k7.mail.motordepot.datamodel.RegistrationData;
+import ru.tasha2k7.mail.motordepot.datamodel.Role;
 import ru.tasha2k7.mail.motordepot.services.ClientService;
 import ru.tasha2k7.mail.motordepot.services.RegistrationDataService;
+import ru.tasha2k7.mail.motordepot.services.RoleService;
 import ru.tasha2k7.mail.motordepot.web.model.ClientModel;
-import ru.tasha2k7.mail.motordepot.web.model.ClientRegistrationModel;
+import ru.tasha2k7.mail.motordepot.web.model.ClientRegistrationRoleModel;
 import ru.tasha2k7.mail.motordepot.web.model.RegistrationDataModel;
+import ru.tasha2k7.mail.motordepot.web.model.RoleModel;
 
 @RestController
-@RequestMapping(value = "/auth/client")  // produces = MediaType.APPLICATION_JSON_VALUE говорит, что по умолчанию все методы этого контроллера будут отдавать JSON
+@RequestMapping(value = "/clientRest") // produces =
+										// MediaType.APPLICATION_JSON_VALUE
+										// говорит, что по умолчанию
+										// все методы этого
+										// контроллера будут
+										// отдавать JSON
 public class ClientController {
 
 	@Inject
@@ -33,87 +41,114 @@ public class ClientController {
 	@SuppressWarnings("unused")
 	@Inject
 	private RegistrationDataController registrationDataController;
-	
+
 	@Inject
 	private MethodController methodController;
 
 	@Inject
 	private RegistrationDataService registrationDataService;
-	
+
+	@Inject
+	private RoleService roleService;
+
 	@RequestMapping(value = "/{clientId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ClientModel> getById(@PathVariable Long clientId) {
-	
-		ClientModel clientModel = methodController.getById(clientId);
-		
-		/*	Client client = clientService.getById(clientId);
+
+		/* ClientModel clientModel = methodController.getById(clientId); */
+
+		Client client = clientService.getById(clientId);
 		RegistrationData registrationData = registrationDataService.getById(client.getRegistrationDataId());
+		Role role = roleService.getById(registrationData.getRoleId());
+		registrationData.setRole(role);
 		client.setRegistrationData(registrationData);
-		
-		 * if (client == null) { System.out.println("Client with id " + clientId
-		 * + " not found"); return new
-		 * ResponseEntity<ClientModel>(HttpStatus.NOT_FOUND); } else
-		 */
-		return new ResponseEntity<ClientModel>(clientModel, HttpStatus.OK);
+
+		// if (client == null) {
+		// System.out.println("Client with id " + clientId + " not found");
+		// return new ResponseEntity<ClientModel>(HttpStatus.NOT_FOUND);
+		// } else
+
+		return new ResponseEntity<ClientModel>(entity2model(client), HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<ClientModel>> getAll() {
-		
-		List<ClientModel> converted = methodController.getAll();
+
+		// List<ClientModel> converted = methodController.getAll();
+		List<Client> all = clientService.getAll();
+
+		List<ClientModel> converted = new ArrayList<>();
+		for (Client client : all) {
+
+			RegistrationData registrationData = registrationDataService.getById(client.getRegistrationDataId());
+			Role role = roleService.getById(registrationData.getRoleId());
+			registrationData.setRole(role);
+			client.setRegistrationData(registrationData);
+
+			converted.add(entity2model(client));
+		}
 		return new ResponseEntity<List<ClientModel>>(converted, HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> createNewClient(@RequestBody ClientRegistrationModel clientRegistrationModel) {
+	public ResponseEntity<Void> createNewClient(@RequestBody ClientRegistrationRoleModel clientRegistrationRoleModel) {
 
-		RegistrationDataModel registrationDataModel = clientRegistrationModel.getRegistrationDataModel();
-		ClientModel clientModel = clientRegistrationModel.getClientModel();
+		RegistrationDataModel registrationDataModel = clientRegistrationRoleModel.getRegistrationDataModel();
+		ClientModel clientModel = clientRegistrationRoleModel.getClientModel();
+		RoleModel roleModel = clientRegistrationRoleModel.getRoleModel();
 
+		Long roleId = roleService.getIdByNameRole(roleModel.getNameRole());
+		roleModel.setId(roleId);
+
+		registrationDataModel.setRoleModel(roleModel);
 		Long registrationDataId = registrationDataService.save(model2entity(registrationDataModel));
 		registrationDataModel.setId(registrationDataId);
+
 		clientModel.setRegistrationDataModel(registrationDataModel);
+
 		clientService.save(model2entity(clientModel));
 
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = "/{clientId}/{registrationDataId}", method = RequestMethod.POST)
-	public ResponseEntity<Void> updateClient(@RequestBody ClientRegistrationModel clientRegistrationModel,
+	public ResponseEntity<Void> updateClient(@RequestBody ClientRegistrationRoleModel clientRegistrationRoleModel,
 			@PathVariable("clientId") Long clientId, @PathVariable("registrationDataId") Long registrationDataId) {
 
-		RegistrationDataModel registrationDataModel = clientRegistrationModel.getRegistrationDataModel();
-		ClientModel clientModel = clientRegistrationModel.getClientModel();
-		
+		RegistrationDataModel registrationDataModel = clientRegistrationRoleModel.getRegistrationDataModel();
+		ClientModel clientModel = clientRegistrationRoleModel.getClientModel();
+		RoleModel roleModel = clientRegistrationRoleModel.getRoleModel();
+
+		Long roleId = roleService.getIdByNameRole(roleModel.getNameRole());
+		roleModel.setId(roleId);
+
+		registrationDataModel.setRoleModel(roleModel);
 		registrationDataModel.setId(registrationDataId);
-		RegistrationData registrationData = model2entity(registrationDataModel);
-		registrationDataService.save(registrationData);
-		
+
 		clientModel.setRegistrationDataModel(registrationDataModel);
 		clientModel.setId(clientId);
-		Client client = model2entity(clientModel);
-		clientService.save(client);
+		clientService.save(model2entity(clientModel));
 
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{clientId}", method = RequestMethod.DELETE)
-    public ResponseEntity<Void> delete(@PathVariable Long clientId) {
+	public ResponseEntity<Void> delete(@PathVariable Long clientId) {
 
 		Client client = clientService.getById(clientId);
-		Long registrationDataId = client.getRegistrationDataId();		
+		Long registrationDataId = client.getRegistrationDataId();
 		clientService.delete(clientId);
 		registrationDataService.delete(registrationDataId);
-		
-        return new ResponseEntity<Void>(HttpStatus.OK);
-    }
-	
-	
-//-----convertors	
+
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+
+	// -----convertors
 	private RegistrationData model2entity(RegistrationDataModel registrationDataModel) {
 		RegistrationData e = new RegistrationData();
 		e.setId(registrationDataModel.getId());
 		e.setEmail(registrationDataModel.getEmail());
 		e.setPassword(registrationDataModel.getPassword());
+		e.setRole(model2entity(registrationDataModel.getRoleModel()));
 		return e;
 	}
 
@@ -122,6 +157,7 @@ public class ClientController {
 		e.setId(registrationData.getId());
 		e.setEmail(registrationData.getEmail());
 		e.setPassword(registrationData.getPassword());
+		e.setRoleModel(entity2model(registrationData.getRole()));
 		return e;
 	}
 
@@ -147,13 +183,27 @@ public class ClientController {
 		return e;
 	}
 
-	private ClientRegistrationModel entity2model(Client client, RegistrationData registrationData) {
+	private RoleModel entity2model(Role role) {
+		RoleModel e = new RoleModel();
+		e.setId(role.getId());
+		e.setNameRole(role.getNameRole());
+		return e;
+	}
 
-		ClientRegistrationModel clientRegistrationModel = new ClientRegistrationModel();
+	private Role model2entity(RoleModel roleModel) {
+		Role e = new Role();
+		e.setId(roleModel.getId());
+		e.setNameRole(roleModel.getNameRole());
+		return e;
+	}
 
-		clientRegistrationModel.setClientModel(entity2model(client));
-		clientRegistrationModel.setRegistrationDataModel(entity2model(registrationData));
+	private ClientRegistrationRoleModel entity2model(Client client, RegistrationData registrationData, Role role) {
 
+		ClientRegistrationRoleModel clientRegistrationRoleModel = new ClientRegistrationRoleModel();
+
+		clientRegistrationRoleModel.setClientModel(entity2model(client));
+		clientRegistrationRoleModel.setRegistrationDataModel(entity2model(registrationData));
+		clientRegistrationRoleModel.setRoleModel(entity2model(role));
 		return null;
 	}
 

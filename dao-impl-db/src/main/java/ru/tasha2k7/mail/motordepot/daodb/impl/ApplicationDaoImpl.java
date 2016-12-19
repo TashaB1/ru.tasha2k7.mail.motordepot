@@ -9,15 +9,16 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import ru.tasha2k7.mail.motordepot.daodb.ApplicationDao;
+import ru.tasha2k7.mail.motordepot.daoapi.IApplicationDao;
 import ru.tasha2k7.mail.motordepot.daodb.dimapper.impl.ApplicationDiMapperImpl;
 import ru.tasha2k7.mail.motordepot.daodb.mapper.ApplicationMapper;
 import ru.tasha2k7.mail.motordepot.daodb.mapper.RoleMapper;
 import ru.tasha2k7.mail.motordepot.daodb.mapper.SpecificationsCargoMapper;
 import ru.tasha2k7.mail.motordepot.datamodel.Application;
+import ru.tasha2k7.mail.motordepot.datamodel.Application.ApplicationStatus;
 
 @Repository
-public class ApplicationDaoImpl extends GenericDaoImpl<Application, Long> implements ApplicationDao {
+public class ApplicationDaoImpl extends GenericDaoImpl<Application, Long> implements IApplicationDao {
 
 	public ApplicationDaoImpl() {
 		super(Application.class, "application", ApplicationMapper.class);
@@ -51,7 +52,7 @@ public class ApplicationDaoImpl extends GenericDaoImpl<Application, Long> implem
 	}
 
 	@Override
-	public List<Application> getAllByStatusApplication(Application.ApplicationStatus status) {
+	public List<Application> getAllByStatusApplication(String status) {
 		try {
 			return jdbcTemplate.query("select * from motordepot.application where status = ?", new Object[] { status },
 					new ApplicationMapper());
@@ -67,7 +68,7 @@ public class ApplicationDaoImpl extends GenericDaoImpl<Application, Long> implem
 	@Override
 	public Application SpecificationsCargo(Long Id) {
 		try {
-			return jdbcTemplate.queryForObject("select * from application where id = ?",new Object[] { Id },
+			return jdbcTemplate.queryForObject("select * from application where id = ?", new Object[] { Id },
 					new SpecificationsCargoMapper());
 		} catch (EmptyResultDataAccessException e) {
 
@@ -88,13 +89,15 @@ public class ApplicationDaoImpl extends GenericDaoImpl<Application, Long> implem
 
 	@Override
 	public List<Long> getAllIdAppointedDriver(String status) {
-		return  jdbcTemplate.queryForList("select id from application where status = ?", new Object[] { status }, Long.class);
+		return jdbcTemplate.queryForList("select id from application where status = ?", new Object[] { status },
+				Long.class);
 	}
 
 	@Override
 	public void appointApplication(Long appId, Long driverId, Long dispatcherId, String status) {
-		jdbcTemplate.update("update application set driver_id=?, dispatcher_id=?, status=? where id=?", driverId, dispatcherId, status, appId);
-		
+		jdbcTemplate.update("update application set driver_id=?, dispatcher_id=?, status=? where id=?", driverId,
+				dispatcherId, status, appId);
+
 	}
 
 }

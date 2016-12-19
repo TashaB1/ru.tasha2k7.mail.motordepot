@@ -7,7 +7,7 @@ import ru.tasha2k7.mail.motordepot.annotation.DBTableName;
 import ru.tasha2k7.mail.motordepot.annotation.DaoMetadata;
 
 @DBTableName(name = "client")
-@DaoMetadata(entity = Client.class)
+@DaoMetadata(mapper = Client.class)
 public class Client extends AbstractModel {
 
 	private String nameClient;

@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import ru.tasha2k7.mail.motordepot.daodb.RoleDao;
+import ru.tasha2k7.mail.motordepot.daoapi.IRoleDao;
 import ru.tasha2k7.mail.motordepot.datamodel.Role;
 import ru.tasha2k7.mail.motordepot.services.RoleService;
 
@@ -18,7 +18,7 @@ public class RoleServiceImpl implements RoleService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(RoleServiceImpl.class);
 
 	@Inject
-	private RoleDao roleDao;
+	private IRoleDao roleDao;
 
 	@Override
 	public Role getById(Long id) {
@@ -54,11 +54,22 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public void delete(Long id) {
 		roleDao.delete(id);
-		
+
 	}
 
+	@Override
+	public Long findTotalRecords() {
+		return roleDao.findTotalRecords();
+	}
 
-	
-	
+	@Override
+	public Long getSequence() {
+		return roleDao.getSequence();
+	}
+
+	@Override
+	public Long getIdByNameRole(String role) {
+		return roleDao.getIdByNameRole(role);
+	}
 
 }

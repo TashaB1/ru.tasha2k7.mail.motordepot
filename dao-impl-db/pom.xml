@@ -16,6 +16,10 @@
 			<groupId>ru.tasha2k7.mail.motordepot</groupId>
 			<artifactId>datamodel</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>ru.tasha2k7.mail.motordepot</groupId>
+			<artifactId>dao-api</artifactId>
+		</dependency>
 
 
 		<dependency>

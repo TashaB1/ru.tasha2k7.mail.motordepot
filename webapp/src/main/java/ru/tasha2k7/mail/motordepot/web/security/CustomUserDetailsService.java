@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import ru.tasha2k7.mail.motordepot.daodb.RegistrationDataDao;
+import ru.tasha2k7.mail.motordepot.daoapi.IRegistrationDataDao;
 import ru.tasha2k7.mail.motordepot.datamodel.RegistrationData;
 import ru.tasha2k7.mail.motordepot.datamodel.Role;
 
@@ -23,7 +23,7 @@ import ru.tasha2k7.mail.motordepot.datamodel.Role;
 public class CustomUserDetailsService implements UserDetailsService {
 
 	@Inject
-	private RegistrationDataDao registrationDataDao;
+	private IRegistrationDataDao registrationDataDao;
 	
 	@PostConstruct
 	protected void init(){
@@ -36,9 +36,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 
-        for (Role role : registrationData.getRole()) {
-            grantedAuthorities.add(new SimpleGrantedAuthority(role.getNameRole()));
-        }
+       // for (Role role : registrationData.getRole()) {
+            grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_"+registrationDataDao.getRoleName(email).toUpperCase()));
+      //  }
         return new org.springframework.security.core.userdetails.User(registrationData.getEmail(), 
         		registrationData.getPassword(), grantedAuthorities);
 	}
