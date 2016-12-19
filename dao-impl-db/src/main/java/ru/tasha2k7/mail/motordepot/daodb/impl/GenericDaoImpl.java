@@ -19,10 +19,7 @@ public abstract class GenericDaoImpl<T, PK extends Serializable> implements IGen
 
 	@Inject
 	private JdbcTemplate jdbcTemplate;
-	private String dbTableName;// = new
-								// DBTableNameAnalyzer().getDBTableName(entityClass);//this.getGenericEntityClass());
-T t;
-	
+	private String dbTableName;   // = new DBTableNameAnalyzer().getDBTableName(this.getGenericEntityClass());
 	/*
 	 * @SuppressWarnings("unchecked") private Class<T> entityClass1 = new
 	 * DaoMetadataAnalyzer().getEntityClass();
@@ -42,7 +39,6 @@ T t;
 	public PK getSequence(){
 		return (PK) jdbcTemplate.queryForObject("select last_value from motordepot." + dbTableName + "_id_seq " , Long.class);
 		//select last_value from motordepot.client_id_seq
-
 	}
 
 	@SuppressWarnings("unchecked")

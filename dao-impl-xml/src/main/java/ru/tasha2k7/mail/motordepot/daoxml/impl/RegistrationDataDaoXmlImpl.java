@@ -20,6 +20,7 @@ import com.thoughtworks.xstream.XStream;
 import ru.tasha2k7.mail.motordepot.daoapi.IGenericDao;
 import ru.tasha2k7.mail.motordepot.daoapi.IRegistrationDataDao;
 import ru.tasha2k7.mail.motordepot.datamodel.RegistrationData;
+import ru.tasha2k7.mail.motordepot.datamodel.Role;
 
 @Repository
 public class RegistrationDataDaoXmlImpl 
@@ -87,7 +88,13 @@ public class RegistrationDataDaoXmlImpl
 
 	@Override
 	public RegistrationData getById(Long id) {
-		// TODO Auto-generated method stub
+		List<RegistrationData> allRegistrationData = readCollection();
+
+		for (RegistrationData registrationData : allRegistrationData) {
+			if (registrationData.getId().equals(id)) {
+				return registrationData;
+			}
+		}
 		return null;
 	}
 

@@ -37,11 +37,11 @@ public class ClientDaoXmlImpl implements IGenericDao<Client, Long>, IClientDao {
 		xstream = new XStream();
 		xstream.alias("client", Client.class);
 
-		file = new File(basePath + "/client.xml");
+		file = new File(basePath + "/client.xml");  
 		if (!file.exists()) {
 			FileUtils.forceMkdir(file.getParentFile());
 			file.createNewFile();
-			xstream.toXML(new ArrayList<>(), new OutputStreamWriter(new FileOutputStream(file), "UTF8"));
+			xstream.toXML(new ArrayList<>(), new FileOutputStream(file));
 		}
 	}
 

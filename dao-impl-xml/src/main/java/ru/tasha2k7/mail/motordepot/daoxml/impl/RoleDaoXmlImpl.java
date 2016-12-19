@@ -20,6 +20,7 @@ import com.thoughtworks.xstream.XStream;
 import ru.tasha2k7.mail.motordepot.daoapi.IGenericDao;
 import ru.tasha2k7.mail.motordepot.daoapi.IRoleDao;
 import ru.tasha2k7.mail.motordepot.datamodel.Role;
+import ru.tasha2k7.mail.motordepot.datamodel.Client;
 import ru.tasha2k7.mail.motordepot.datamodel.RegistrationData;
 
 @Repository
@@ -43,7 +44,7 @@ public class RoleDaoXmlImpl implements IRoleDao, IGenericDao<Role, Long> {
 			FileUtils.forceMkdir(file.getParentFile());
 			file.createNewFile();
 			xstream.toXML(new ArrayList<>(),
-					new OutputStreamWriter(new FileOutputStream(file), Charset.forName("UTF-8")));
+					new OutputStreamWriter(new FileOutputStream(file)));
 		}
 	}
 
@@ -54,7 +55,7 @@ public class RoleDaoXmlImpl implements IRoleDao, IGenericDao<Role, Long> {
 
 	private void writeCollection(List<Role> newList) {
 		try {
-			xstream.toXML(newList, new OutputStreamWriter(new FileOutputStream(file), Charset.forName("UTF-8")));
+			xstream.toXML(newList, new OutputStreamWriter(new FileOutputStream(file)));
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException(e);// TODO custom exception
 		}
@@ -76,7 +77,14 @@ public class RoleDaoXmlImpl implements IRoleDao, IGenericDao<Role, Long> {
 
 	@Override
 	public Role getById(Long id) {
-		throw new UnsupportedOperationException();
+		List<Role> allRole = readCollection();
+
+		for (Role role : allRole) {
+			if (role.getId().equals(id)) {
+				return role;
+			}
+		}
+		return null;
 	}
 
 	@Override

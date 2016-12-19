@@ -25,7 +25,8 @@ public class RegistrationDataServiceTest {
 	@Test
 	public void saveTest() {
 		RegistrationData registrationData = new RegistrationData();
-		registrationData.setEmail("client" + String.valueOf(registrationDataService.getSequence()+1));
+		
+		registrationData.setEmail("client" + String.valueOf((int) (Math.random() * 100)) );
 		registrationData.setPassword("123");
 		registrationData.setRole(roleService.getById(4l)); // ???
 		Long id = registrationDataService.save(registrationData);

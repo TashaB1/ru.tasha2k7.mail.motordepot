@@ -15,19 +15,15 @@
 			</Policies>
 		</RollingFile>
 
-	<!--	<SMTP name="SMTPAppender" 
-				smtpPort="25" 
-				subject="Test send log"
+		<!-- <SMTP name="SMTPAppender" 
+			smtpPort="25" 
+			subject="Test send log" 
 			to="tasha2k7@mail.com" 
 			from="tasha2k7@mail.com" 
-			smtpHost="smtp.mail.ru"
+			smtpHost="smtp.mail.ru" 
 			smtpUsername="tasha2k7" 
 			smtpPassword="breakfast1" 
-			bufferSize="512">
-			<PatternLayout charset="UTF-8">
-				<pattern>[%5p] %d{yyyy-MM-dd HH:mm:ss} %c{1}:%L - %m%n </pattern>
-			</PatternLayout>
-		</SMTP>  -->
+			bufferSize="512"> </SMTP> -->
 
 	</Appenders>
 
@@ -40,13 +36,13 @@
 			additivity="false">
 			<AppenderRef ref="Console" />
 			<AppenderRef ref="RollingFile" />
-		<!--	<appender-ref ref="SMTPAppender" />  -->
+			<!-- <appender-ref ref="SMTPAppender" /> -->
 		</Logger>
 
 	</Loggers>
 
 
-	
+
 
 	<!-- Если ваше приложение деплоится в различных временных зонах, то удобно 
 		писать логи в UTC apache-log4j-extras.jar. -->
