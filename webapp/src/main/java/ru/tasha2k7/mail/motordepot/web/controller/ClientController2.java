@@ -2,6 +2,12 @@ package ru.tasha2k7.mail.motordepot.web.controller;
 
 import java.util.List;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,7 +20,6 @@ import ru.tasha2k7.mail.motordepot.services.RoleService;
 import ru.tasha2k7.mail.motordepot.web.model.ClientModel;
 
 @Controller
-//@RequestMapping(value = "/auth/")
 public class ClientController2 {
 	@Inject
 	private ClientService clientService;
@@ -42,9 +47,25 @@ public class ClientController2 {
         } else {
             this.clientService.save(client);
         }
-
         return "redirect:/clientAll";
 	}
+	
+	
+	@RequestMapping(value = "/admin" ,method = RequestMethod.GET)
+	public String  getAdmin(Model model){		
+		return "admin";
+	}
+	
+	@RequestMapping(value = "/driver" ,method = RequestMethod.GET)
+	public String  getDriver(Model model){		
+		return "driver";
+	}
+	
+	@RequestMapping(value = "/dispatcher" ,method = RequestMethod.GET)
+	public String  getDispatcher(Model model){		
+		return "dispatcher";
+	}
+	
 	
 	private ClientModel entity2model(Client client) {
 		ClientModel e = new ClientModel();
@@ -63,6 +84,15 @@ public class ClientController2 {
 		model.addAttribute("role", new Role());
         model.addAttribute("list", this.roleService.getAll());
 		return "role";
+	}
+	
+	@RequestMapping(value="/logout", method = RequestMethod.GET)
+	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    if (auth != null){    
+	        new SecurityContextLogoutHandler().logout(request, response, auth);
+	    }
+	    return "login1";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
 	}
 	
 }

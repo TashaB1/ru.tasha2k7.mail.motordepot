@@ -57,6 +57,7 @@ table {
 <body>
 	<a href="../../index.jsp" target="_self">Back to main menu</a>
 	<br />
+	<a href="<c:url value="/logout" />">Logout</a>
 	<br />
 
 	<h1>Client List</h1>

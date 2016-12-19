@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-admin!
+<h1>Admin!</h1>
 </body>
 </html>
