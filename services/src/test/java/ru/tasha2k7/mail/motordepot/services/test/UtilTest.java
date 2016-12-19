@@ -18,6 +18,6 @@ public class UtilTest {
 	
 	@Test
 	public void CreateSchemaTest() {
-		createDropNewSchema.CreateSchema("motordepot_postgres_create_test.sql");
+		//createDropNewSchema.CreateSchema("motordepot_postgres_create_test.sql");
 	}
 }

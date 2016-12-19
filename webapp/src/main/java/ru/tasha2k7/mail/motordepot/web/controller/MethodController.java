@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import ru.tasha2k7.mail.motordepot.datamodel.Client;
 import ru.tasha2k7.mail.motordepot.datamodel.RegistrationData;
+import ru.tasha2k7.mail.motordepot.datamodel.Role;
 import ru.tasha2k7.mail.motordepot.services.ClientService;
 import ru.tasha2k7.mail.motordepot.services.RegistrationDataService;
+import ru.tasha2k7.mail.motordepot.services.RoleService;
 import ru.tasha2k7.mail.motordepot.web.converters.ClientConverter;
 import ru.tasha2k7.mail.motordepot.web.model.ClientModel;
 
@@ -25,6 +27,9 @@ public class MethodController {
 
 	@Inject
 	private RegistrationDataService registrationDataService;
+	
+	@Inject
+	private RoleService roleService;
 
 	public List<ClientModel> getAll() {
 
@@ -40,7 +45,10 @@ public class MethodController {
 	public ClientModel getById(Long clientId) {
 		Client client = clientService.getById(clientId);
 		RegistrationData registrationData = registrationDataService.getById(client.getRegistrationDataId());
+		Role role = roleService.getById(registrationData.getRoleId());
+		registrationData.setRole(role);
 		client.setRegistrationData(registrationData);
+		
 		/*
 		 * if (client == null) { System.out.println("Client with id " + clientId
 		 * + " not found"); return new

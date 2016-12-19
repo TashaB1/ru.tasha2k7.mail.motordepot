@@ -15,6 +15,20 @@
 			</Policies>
 		</RollingFile>
 
+	<!--	<SMTP name="SMTPAppender" 
+				smtpPort="25" 
+				subject="Test send log"
+			to="tasha2k7@mail.com" 
+			from="tasha2k7@mail.com" 
+			smtpHost="smtp.mail.ru"
+			smtpUsername="tasha2k7" 
+			smtpPassword="breakfast1" 
+			bufferSize="512">
+			<PatternLayout charset="UTF-8">
+				<pattern>[%5p] %d{yyyy-MM-dd HH:mm:ss} %c{1}:%L - %m%n </pattern>
+			</PatternLayout>
+		</SMTP>  -->
+
 	</Appenders>
 
 	<Loggers>
@@ -26,29 +40,13 @@
 			additivity="false">
 			<AppenderRef ref="Console" />
 			<AppenderRef ref="RollingFile" />
+		<!--	<appender-ref ref="SMTPAppender" />  -->
 		</Logger>
 
 	</Loggers>
 
 
-	<!--  <appender name="ErrorEmailAppender" class="org.apache.log4j.net.SMTPAppender">
-		<param name="SMTPHost" value="mail.mydomain.com" />
-		<param name="SMTPUsername" value="myuser@mydomain.com" />
-		<param name="SMTPPassword" value="password" />
-		<param name="From" value="myuser@mydomain.com" />
-		<param name="To" value="myuser@mydomain.com" />
-		<param name="Subject" value="Log of messages" />
-		<param name="BufferSize" value="1" />
-		<param name="EvaluatorClass" value="TriggerLogEvent" />
-		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="%t %m%n" />
-		</layout>
-	</appender>
-
-	<logger name="com.foo.mailer">
-		<level value="INFO" />
-		<appender-ref ref="ErrorEmailAppender" />
-	</logger>  -->
+	
 
 	<!-- Если ваше приложение деплоится в различных временных зонах, то удобно 
 		писать логи в UTC apache-log4j-extras.jar. -->

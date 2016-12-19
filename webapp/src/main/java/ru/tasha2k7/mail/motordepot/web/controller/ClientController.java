@@ -8,7 +8,6 @@ import javax.inject.Inject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,12 +26,7 @@ import ru.tasha2k7.mail.motordepot.web.model.RegistrationDataModel;
 import ru.tasha2k7.mail.motordepot.web.model.RoleModel;
 
 @RestController
-@RequestMapping(value = "/clientRest") // produces =
-										// MediaType.APPLICATION_JSON_VALUE
-										// говорит, что по умолчанию
-										// все методы этого
-										// контроллера будут
-										// отдавать JSON
+@RequestMapping(value = "/basicAuthSecured/clientRest", produces = MediaType.APPLICATION_JSON_VALUE+"; charset=UTF-8")  // produces = MediaType.APPLICATION_JSON_VALUE говорит, что по умолчанию все методы этого контроллера будут отдавать JSON
 public class ClientController {
 
 	@Inject
@@ -54,20 +48,13 @@ public class ClientController {
 	@RequestMapping(value = "/{clientId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ClientModel> getById(@PathVariable Long clientId) {
 
-		/* ClientModel clientModel = methodController.getById(clientId); */
+		ClientModel clientModel = methodController.getById(clientId);
 
-		Client client = clientService.getById(clientId);
-		RegistrationData registrationData = registrationDataService.getById(client.getRegistrationDataId());
-		Role role = roleService.getById(registrationData.getRoleId());
-		registrationData.setRole(role);
-		client.setRegistrationData(registrationData);
-
-		// if (client == null) {
-		// System.out.println("Client with id " + clientId + " not found");
-		// return new ResponseEntity<ClientModel>(HttpStatus.NOT_FOUND);
-		// } else
-
-		return new ResponseEntity<ClientModel>(entity2model(client), HttpStatus.OK);
+//		if (clientModel == null) {
+//			// System.out.priSntln("Client with id " + clientId + " not found");
+//			return new ResponseEntity<ClientModel>(clientModel, HttpStatus.NOT_FOUND);
+//		} else
+			return new ResponseEntity<ClientModel>(clientModel, HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.GET)

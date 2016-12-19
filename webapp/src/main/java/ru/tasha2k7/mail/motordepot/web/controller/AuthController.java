@@ -32,7 +32,7 @@ public class AuthController {
 
 	@RequestMapping(value = "/auth", method = RequestMethod.POST)
 	public String getPage(@RequestParam("email") String email, @RequestParam("password") String password) {
-		System.out.println("трям");
+		
 
 		if (registrationDataService.findByEmail(email) != null) {
 			switch (registrationDataService.getRoleName(email)) {
